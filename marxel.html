@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nativ for Life: Infografía de Oportunidades de Crecimiento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F2F2;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flow-line {
+            width: 2px;
+            background-color: #2C4251;
+            margin: 0 auto;
+        }
+        .flow-line-h {
+            height: 2px;
+            background-color: #2C4251;
+            flex-grow: 1;
+        }
+        .plus-icon {
+            font-size: 2rem;
+            color: #2C4251;
+            font-weight: bold;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2C4251;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-[#333333]">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#2C4251] mb-2">Explorando Nuevas Fronteras</h1>
+            <p class="text-xl md:text-2xl text-[#00A676] font-bold">Oportunidades de Crecimiento para Nativ for Life</p>
+            <p class="max-w-3xl mx-auto mt-4 text-lg">Análisis visual de dos superalimentos con alto potencial de mercado: Golden Berry y Omega-3 de Microalgas, alineados con la innovación, sostenibilidad y las demandas del consumidor actual.</p>
+        </header>
+
+        <main>
+            
+            <section id="golden-berry" class="mb-16">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#2C4251]">Oportunidad 1: Golden Berry <span class="text-[#FFC759]">(Physalis peruviana)</span></h2>
+                    <p class="text-xl text-[#00A676]">El Tesoro Andino para la Vitalidad Metabólica</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-bold text-xl mb-4 text-[#2C4251]">Perfil Nutricional Destacado</h3>
+                        <p class="mb-6">El Golden Berry es una potencia nutricional. Su procesamiento como polvo liofilizado concentra sus compuestos bioactivos, ofreciendo una fuente excepcional de antioxidantes, vitaminas y fibra, ideal para el portafolio de Nativ for Life.</p>
+                        <div class="flex justify-around text-center">
+                            <div>
+                                <p class="text-3xl font-black text-[#FFC759]">145+</p>
+                                <p class="text-sm">mg Polifenoles / 100g</p>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-black text-[#FFC759]">5g+</p>
+                                <p class="text-sm">Fibra Dietética / 100g</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center space-x-4 mt-6">
+                            <button onclick="generateContent('Golden Berry', 'beneficios')" class="bg-[#FFC759] text-[#2C4251] px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#FFD78F] transition-colors">Generar Beneficios ✨</button>
+                            <button onclick="generateContent('Golden Berry', 'receta')" class="bg-[#00A676] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#00BF88] transition-colors">Sugerir Receta ✨</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                         <h3 class="font-bold text-xl mb-2 text-center text-[#2C4251]">Composición de Valor</h3>
+                        <p class="text-center mb-4 text-sm">Una mirada a la distribución de sus principales componentes funcionales.</p>
+                        <div class="chart-container">
+                            <canvas id="goldenBerryCompositionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                         <h3 class="font-bold text-xl mb-2 text-center text-[#2C4251]">Impacto Científicamente Demostrado en la Salud</h3>
+                         <p class="text-center mb-4 max-w-2xl mx-auto">El consumo de Golden Berry está asociado a múltiples beneficios, posicionándolo como un ingrediente clave para la prevención y el bienestar general.</p>
+                        <div class="chart-container h-[450px] max-h-[500px]">
+                            <canvas id="goldenBerryBenefitsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="omega-3" class="mb-16">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#2C4251]">Oportunidad 2: Omega-3 de Microalgas</h2>
+                    <p class="text-xl text-[#00A676]">Innovación Pura y Sostenible para Cerebro y Corazón</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white rounded-lg shadow-md p-6 order-2 md:order-1">
+                        <h3 class="font-bold text-xl mb-2 text-center text-[#2C4251]">DHA vs. EPA: El Poder de las Cadenas</h3>
+                        <p class="text-center mb-4 text-sm">Diferentes cepas de microalgas ofrecen distintos perfiles de ácidos grasos, permitiendo formulaciones dirigidas a beneficios específicos.</p>
+                        <div class="chart-container">
+                            <canvas id="omega3CompositionChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6 order-1 md:order-2">
+                        <h3 class="font-bold text-xl mb-4 text-[#2C4251]">La Alternativa Vegana Definitiva</h3>
+                        <p class="mb-6">El Omega-3 de algas es la fuente original, sostenible y pura de DHA y EPA. Al ser libre de contaminantes marinos y alérgenos de pescado, se alinea con el pilar "vegan-friendly" de Nativ for Life y atrae a un consumidor consciente y exigente.</p>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="bg-[#F2F2F2] p-4 rounded-lg">
+                                <span class="text-4xl">🧠</span>
+                                <p class="font-bold mt-2">Salud Cerebral</p>
+                            </div>
+                            <div class="bg-[#F2F2F2] p-4 rounded-lg">
+                                <span class="text-4xl">❤️</span>
+                                <p class="font-bold mt-2">Apoyo Cardiovascular</p>
+                            </div>
+                            <div class="bg-[#F2F2F2] p-4 rounded-lg">
+                                <span class="text-4xl">👁️</span>
+                                <p class="font-bold mt-2">Función Ocular</p>
+                            </div>
+                             <div class="bg-[#F2F2F2] p-4 rounded-lg">
+                                <span class="text-4xl">🤰</span>
+                                <p class="font-bold mt-2">Salud Materno-Infantil</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center space-x-4 mt-6">
+                            <button onclick="generateContent('Omega-3 de Microalgas', 'beneficios')" class="bg-[#FFC759] text-[#2C4251] px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#FFD78F] transition-colors">Generar Beneficios ✨</button>
+                            <button onclick="generateContent('Omega-3 de Microalgas', 'receta')" class="bg-[#00A676] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#00BF88] transition-colors">Sugerir Receta ✨</button>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6 order-3">
+                         <h3 class="font-bold text-xl mb-2 text-center text-[#2C4251]">Análisis de Precios: El Valor de la Innovación</h3>
+                         <p class="text-center mb-4 max-w-2xl mx-auto">El mercado chileno ya asigna un valor premium al Omega-3 de algas en formato cápsula. Esto presenta una oportunidad clara para introducir un formato en polvo innovador y versátil a un precio competitivo y rentable.</p>
+                        <div class="chart-container h-[450px] max-h-[500px]">
+                            <canvas id="omegaPriceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="blends" class="mb-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#2C4251]">Sinergia Innovadora: Mezclas Funcionales</h2>
+                    <p class="text-xl text-[#00A676]">Combinando ingredientes para potenciar beneficios y capturar nuevos mercados.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <div class="bg-white rounded-lg shadow-md p-8 flex flex-col items-center">
+                        <h3 class="text-2xl font-bold text-center text-[#2C4251] mb-2">Vitalidad Andina & Cognitiva</h3>
+                        <p class="text-center mb-6">Un nootrópico natural para energía mental y física sostenida.</p>
+                        
+                        <div class="w-full flex flex-col items-center">
+                            <div class="bg-[#FFC759] text-white p-4 rounded-lg shadow-md text-center w-3/4">
+                                <p class="font-bold">Golden Berry</p>
+                                <p class="text-sm">Soporte Metabólico</p>
+                            </div>
+                            <div class="plus-icon my-2">+</div>
+                            <div class="bg-[#A0522D] text-white p-4 rounded-lg shadow-md text-center w-3/4">
+                                <p class="font-bold">Maca</p>
+                                <p class="text-sm">Energía y Resistencia</p>
+                            </div>
+                            <div class="plus-icon my-2">+</div>
+                             <div class="bg-[#6B4226] text-white p-4 rounded-lg shadow-md text-center w-3/4">
+                                <p class="font-bold">Cacao</p>
+                                <p class="text-sm">Foco y Ánimo</p>
+                            </div>
+                            <div class="w-px h-6 bg-[#2C4251] my-4"></div>
+                            <div class="text-4xl">👇</div>
+                            <div class="mt-4 border-4 border-[#FFC759] p-4 rounded-lg bg-[#FFC759]/10 text-center w-full">
+                                <p class="text-xl font-black text-[#2C4251]">Resultado:</p>
+                                <p class="text-lg font-bold text-[#A0522D]">Potenciador Cognitivo Natural</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-8 flex flex-col items-center">
+                        <h3 class="text-2xl font-bold text-center text-[#2C4251] mb-2">Bienestar Marino & Detox</h3>
+                        <p class="text-center mb-6">Un "reset" diario para desintoxicación y protección celular.</p>
+
+                        <div class="w-full flex flex-col items-center">
+                            <div class="bg-[#00A676] text-white p-4 rounded-lg shadow-md text-center w-3/4">
+                                <p class="font-bold">Omega-3 de Algas</p>
+                                <p class="text-sm">Salud Sistémica</p>
+                            </div>
+                             <div class="plus-icon my-2">+</div>
+                            <div class="bg-[#4E8D7C] text-white p-4 rounded-lg shadow-md text-center w-3/4">
+                                <p class="font-bold">Chlorella</p>
+                                <p class="text-sm">Detox de Metales</p>
+                            </div>
+                             <div class="plus-icon my-2">+</div>
+                            <div class="bg-[#F4A460] text-black p-4 rounded-lg shadow-md text-center w-3/4">
+                                <p class="font-bold">Jengibre</p>
+                                <p class="text-sm">Antiinflamatorio</p>
+                            </div>
+                            <div class="w-px h-6 bg-[#2C4251] my-4"></div>
+                             <div class="text-4xl">👇</div>
+                            <div class="mt-4 border-4 border-[#00A676] p-4 rounded-lg bg-[#00A676]/10 text-center w-full">
+                                <p class="text-xl font-black text-[#2C4251]">Resultado:</p>
+                                <p class="text-lg font-bold text-[#006442]">Limpieza Celular Avanzada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for LLM output -->
+    <div id="llmModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="hideModal()">&times;</span>
+            <h3 id="modalTitle" class="text-2xl font-bold mb-4 text-[#2C4251]"></h3>
+            <div id="modalSpinner" class="spinner"></div>
+            <p id="modalText" class="text-md leading-relaxed whitespace-pre-wrap"></p>
+        </div>
+    </div>
+
+    <script>
+        const wrapLabel = (label) => {
+            const maxLength = 16;
+            if (label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).length > maxLength) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine += (currentLine === '' ? '' : ' ') + word;
+                }
+            });
+            lines.push(currentLine);
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#333333',
+                        font: { size: 14 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+
+        const chartColors = {
+            yellow: '#FFC759',
+            green: '#00A676',
+            darkBlue: '#2C4251',
+            lightBrown: '#A0522D',
+            darkBrown: '#6B4226',
+            lightGreen: '#4E8D7C',
+            sandy: '#F4A460',
+            gray: '#CCCCCC'
+        };
+
+        const createGoldenBerryCompositionChart = () => {
+            const ctx = document.getElementById('goldenBerryCompositionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Polifenoles y Antioxidantes', 'Vitaminas (A & C)', 'Fibra Dietética', 'Minerales (K, P, Mg)'],
+                    datasets: [{
+                        label: 'Composición Nutricional',
+                        data: [35, 25, 25, 15],
+                        backgroundColor: [chartColors.yellow, chartColors.green, chartColors.lightBrown, chartColors.sandy],
+                        borderColor: '#FFFFFF',
+                        borderWidth: 2
+                    }]
+                },
+                options: { ...commonChartOptions }
+            });
+        };
+        
+        const createGoldenBerryBenefitsChart = () => {
+            const ctx = document.getElementById('goldenBerryBenefitsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Salud Metabólica', 'Salud Digestiva', 'Protección Antioxidante', 'Salud Ocular', 'Efecto Antiinflamatorio'],
+                    datasets: [{
+                        label: 'Nivel de Impacto Científico',
+                        data: [9.5, 8.5, 9.8, 8.0, 9.2],
+                        backgroundColor: [chartColors.yellow, chartColors.green, chartColors.lightBrown, chartColors.sandy, chartColors.darkBrown],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    ...commonChartOptions,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 10,
+                            grid: {
+                                color: '#E0E0E0'
+                            },
+                             ticks: { color: '#333333' }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: { color: '#333333', font: {size: 14} }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
+                    }
+                }
+            });
+        };
+        
+        const createOmega3CompositionChart = () => {
+            const ctx = document.getElementById('omega3CompositionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [wrapLabel('Schizochytrium sp.'), wrapLabel('Nannochloropsis sp.')],
+                    datasets: [
+                        {
+                            label: 'DHA (%)',
+                            data: [20, 2],
+                            backgroundColor: chartColors.green,
+                            borderRadius: 5
+                        },
+                        {
+                            label: 'EPA (%)',
+                            data: [10, 4.5],
+                            backgroundColor: chartColors.lightGreen,
+                            borderRadius: 5
+                        }
+                    ]
+                },
+                options: {
+                    ...commonChartOptions,
+                    scales: {
+                        x: { 
+                            stacked: true, 
+                            grid: { display: false },
+                            ticks: { color: '#333333', font: {size: 12} }
+                        },
+                        y: { 
+                            stacked: true, 
+                            beginAtZero: true, 
+                            ticks: { color: '#333333' },
+                            title: { display: true, text: '% de Ácidos Grasos', color: '#333333' }
+                        }
+                    }
+                }
+            });
+        };
+
+        const createOmegaPriceChart = () => {
+            const ctx = document.getElementById('omegaPriceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Cápsulas (Promedio Mercado)', 'Polvo (Estimado Nativ for Life)'],
+                    datasets: [{
+                        label: 'Precio Retail (CLP)',
+                        data: [25500, 16990],
+                        backgroundColor: [chartColors.gray, chartColors.green],
+                        borderRadius: 5,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    ...commonChartOptions,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback,
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                             ticks: { 
+                                 color: '#333333',
+                                 callback: function(value) {
+                                     return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', minimumFractionDigits: 0 }).format(value);
+                                 }
+                            }
+                        },
+                        x: {
+                             ticks: { color: '#333333', font: {size: 14} }
+                        }
+                    }
+                }
+            });
+        };
+
+        const showModal = (title, content, showSpinner = false) => {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = content;
+            document.getElementById('modalSpinner').style.display = showSpinner ? 'block' : 'none';
+            document.getElementById('modalText').style.display = showSpinner ? 'none' : 'block';
+            document.getElementById('llmModal').style.display = 'flex';
+        };
+
+        const hideModal = () => {
+            document.getElementById('llmModal').style.display = 'none';
+        };
+
+        const generateContent = async (productName, type) => {
+            let prompt = "";
+            let modalTitle = "";
+
+            if (type === 'beneficios') {
+                modalTitle = `Beneficios del ${productName}`;
+                prompt = `Describe los beneficios para la salud de ${productName} en polvo, enfocado en el bienestar y la energía. Incluye 3-4 puntos clave con breves explicaciones.`;
+            } else if (type === 'receta') {
+                modalTitle = `Receta con ${productName}`;
+                prompt = `Genera una receta fácil y deliciosa que incorpore ${productName} en polvo. Incluye ingredientes, cantidades y pasos sencillos. La receta debe ser para una persona y pensada para un desayuno o snack.`;
+            }
+
+            showModal(modalTitle, "Cargando...", true);
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    showModal(modalTitle, text);
+                } else {
+                    showModal(modalTitle, "No se pudo generar el contenido. Inténtalo de nuevo más tarde.");
+                }
+            } catch (error) {
+                showModal(modalTitle, "Error al conectar con la IA. Por favor, revisa tu conexión.");
+                console.error("Error al llamar a la API de Gemini:", error);
+            }
+        };
+
+        window.onload = () => {
+            createGoldenBerryCompositionChart();
+            createGoldenBerryBenefitsChart();
+            createOmega3CompositionChart();
+            createOmegaPriceChart();
+        };
+    </script>
+</body>
+</html>
